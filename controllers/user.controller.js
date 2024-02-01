@@ -89,14 +89,25 @@ const updateUser = async (req, res) => {
     if (!user) {
       return res.status(404).json({ success: false, message: 'This account is not exits.' })
     }
-
-    // const { password, ...rest } = user._doc
+    const { password, ...rest } = user._doc
     return res.status(200).json({ success: true, message: `${user.firstName} ${user.lastName} info`, user: user })
   } catch (error) {
     res.status(500).json({ success: false, message: error.message })
   }
 }
 
-//**************** UPDATE USER ****************/
+//**************** DELETE USER ****************/
+const deleteUser = async (req, res) => {
+  try {
+    const user = await User.findByIdAndDelete(req.params.userId)
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'This account is not exits.' })
+    }
+    const { password, ...rest } = user._doc
+    return res.status(200).json({ success: true, message: "Delete account successfully", user: user })
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message })
+  }
+}
 
-export { register, login, getUser, updateUser }
+export { register, login, getUser, updateUser, deleteUser }

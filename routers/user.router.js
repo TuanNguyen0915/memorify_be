@@ -4,4 +4,5 @@ const router = Router()
 
 router.get('/:userId', userCtrl.getUser)
 router.put('/:userId', userCtrl.updateUser)
+router.delete('/:userId', userCtrl.deleteUser)
 export { router }
