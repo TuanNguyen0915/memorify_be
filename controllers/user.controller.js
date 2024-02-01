@@ -79,18 +79,24 @@ const getUser = async (req, res) => {
   }
 }
 
-//**************** GET USER DETAILS ****************/
+//**************** UPDATE USER ****************/
 const updateUser = async (req, res) => {
   try {
+    if (req.body.password) {
+      req.body.password = bcrypt.hashSync(req.body.password, 10)
+    }
     let user = await User.findByIdAndUpdate(req.params.userId, req.body, { new: true })
     if (!user) {
       return res.status(404).json({ success: false, message: 'This account is not exits.' })
     }
-    const { password, ...rest } = user._doc
-    return res.status(200).json({ success: true, message: `${user.firstName} ${user.lastName} info`, user: rest })
+
+    // const { password, ...rest } = user._doc
+    return res.status(200).json({ success: true, message: `${user.firstName} ${user.lastName} info`, user: user })
   } catch (error) {
     res.status(500).json({ success: false, message: error.message })
   }
 }
+
+//**************** UPDATE USER ****************/
 
 export { register, login, getUser, updateUser }
