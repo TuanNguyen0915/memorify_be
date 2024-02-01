@@ -9,6 +9,7 @@ import './configs/database.js'
 //* routers
 import { router as authRouter } from './routers/auth.router.js'
 import { router as userRouter } from './routers/user.router.js'
+import { router as postRouter } from './routers/post.router.js'
 
 const app = express()
 const PORT = process.env.PORT
@@ -24,6 +25,8 @@ app.use(
 //* user routers
 app.use('/api/auth', authRouter)
 app.use('/api/user', userRouter)
+app.use('/api/post', postRouter)
+
 
 app.listen(PORT, () => {
   console.log(`Server is running at port ${PORT}`)
