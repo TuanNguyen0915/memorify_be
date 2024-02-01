@@ -18,16 +18,14 @@ const register = async (req, res) => {
     //create token
     const token = generateToken(newUser._id)
     const { password, ...rest } = newUser._doc
-    return res
-      .cookie('token', token, {
-        path: '/',
-        httpOnly: true,
-        sameSite: 'none',
-        secure: true,
-        expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 2), // 2days
-      })
-      .status(201)
-      .json({ success: true, message: 'Create a new user successfully', user: rest })
+    // res.cookie('token', token, {
+    //   path: '/',
+    //   httpOnly: true,
+    //   sameSite: 'none',
+    //   secure: true,
+    //   expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 2), // 2days
+    // })
+    return res.status(201).json({ success: true, message: 'Create a new user successfully', token, user: rest })
   } catch (error) {
     res.status(500).json({ success: false, message: error.message })
   }
@@ -44,21 +42,19 @@ const login = async (req, res) => {
     // check password
     const isPasswordMatching = bcrypt.compareSync(req.body.password, user.password)
     if (!isPasswordMatching) {
-      return res.status(404).json({ success: false, message: 'This password is not matching' })
+      return res.status(404).json({ success: false, message: 'Wrong password' })
     }
     //create token
     const token = generateToken(user._id)
     const { password, ...rest } = user._doc
-    return res
-      .cookie('token', token, {
-        path: '/',
-        httpOnly: true,
-        sameSite: 'none',
-        secure: true,
-        expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 2), // 2 day
-      })
-      .status(200)
-      .json({ success: true, message: 'Login successfully', token, user: rest })
+    // res.cookie('token', token, {
+    //   path: '/',
+    //   httpOnly: true,
+    //   sameSite: 'none',
+    //   secure: true,
+    //   expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 2), // 2 day
+    // })
+    return res.status(200).json({ success: true, message: 'Login successfully', token, user: rest })
   } catch (error) {
     res.status(500).json({ success: false, message: error.message })
   }

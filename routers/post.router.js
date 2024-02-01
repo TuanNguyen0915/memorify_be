@@ -1,9 +1,7 @@
 import { Router } from 'express'
-
+import * as postCtrl from '../controllers/post.controller.js'
 const router = Router()
 
-router.get('/', (req, res) => {
-  res.send('Post router Memorify')
-})
-
+router.post('/', postCtrl.createPost)
+router.get('/:postId', postCtrl.postDetails)
 export { router }

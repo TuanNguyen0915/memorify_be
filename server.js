@@ -13,20 +13,18 @@ import { router as postRouter } from './routers/post.router.js'
 
 const app = express()
 const PORT = process.env.PORT
-
+const corsOption = {
+  credentials: true,
+  origin: true,
+}
 //* middlewares
 app.use(express.json())
 app.use(cookieParser())
-app.use(
-  cors({
-    credentials: true,
-  })
-)
+app.use(cors(corsOption))
 //* user routers
 app.use('/api/auth', authRouter)
 app.use('/api/user', userRouter)
 app.use('/api/post', postRouter)
-
 
 app.listen(PORT, () => {
   console.log(`Server is running at port ${PORT}`)
