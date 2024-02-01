@@ -2,8 +2,6 @@ import { Router } from 'express'
 import * as userCtrl from '../controllers/user.controller.js'
 const router = Router()
 
-router.post('/register', userCtrl.register)
-router.post('/login', userCtrl.login)
-
-
+router.get('/:userId', userCtrl.getUser)
+router.put('/:userId', userCtrl.updateUser)
 export { router }
